@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="manifest" href="manifest.json"/>
+    <title>Buscador de películas</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/estilo.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand" href="#">Peliculas</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" id="liHome" href="#home">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="liVermastarde" href="#vermastarde">Ver más tarde</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">A definir</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+  
+<div class="container" id="buscador">
+    <h1 class="text-center">Buscador de películas</h1>
+    <form id="form">
+      <div class="row">
+          <div class="col-md-1 col-lg-2 col-xl-2"></div>
+          <div class="col-12 col-sm-10 col-md-9 col-lg-8 col-xl-7 top">
+              <input id="input" class="form-control mr-sm-2" type="search" placeholder="¿Que pelicula querés ver?" aria-label="Buscar">
+          </div>
+          <div class="col-12 col-sm-2 col-md-1 col-lg-1 col-xl-1 d-flex">
+              <button id="buscar" class="btn btn-primary ml-auto my-2 my-sm-0" type="submit">Buscar</button>
+          </div>
+          <div class="col-md-1 col-lg-2 col-xl-2"></div>
+      </div>
+    </form>
+</div>
+
+<div class="container">
+    <main>
+      <section id="home">
+        <div id="alert">
+
+        </div>
+
+        <div id="info">
+
+        </div>
+      </section>
+
+      <section id="vermastarde">  
+          
+      </section>
+
+    </main>
+</div>  
+</body>
+<script src="js/jquery-3.4.1.js"></script>
+<script src="js/bootstrap.bundle.js"></script>
+<script src="js/sw.js"></script>
+<script src="js/app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dexie/3.2.0-rc.3/dexie.min.js"></script>
+</html>
