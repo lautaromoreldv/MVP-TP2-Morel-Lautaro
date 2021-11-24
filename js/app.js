@@ -101,12 +101,29 @@ function refreshView(){
 }
 
 function mostrarPeliculas(peliculas){
-    peliculas.forEach(function(pelicula) {
-        vermastarde.innerHTML = `<ul>
-                                    <li>${pelicula.sinopsis}</li>
-                                    <li>${pelicula.poster}</li>
-                                </ul>`;
-    });
+    for (let i = 0; i < peliculas.length; i++) {
+        console.log(peliculas[i]);
+        vermastarde.innerHTML = `<div class="card">
+                                    <img class="card-img-top" src="${peliculas.poster}" alt="${peliculas.titulo}" />
+                                    <div class="card-body">
+                                        <h2 class="text-center">${peliculas.titulo}</h2>
+                                    </div>  
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item">
+                                            <p>Descripción:</p>
+                                            <span>${peliculas.sinopsis}<span>
+                                        <li class="list-group-item">
+                                            <p>Calificación:</p>
+                                            <span><strong>${peliculas.score}/10</strong><span>
+                                    </ul>  
+                                    <div class="text-center pt-3 pb-3">
+                                        <button type="button" id="porverdelete" class="btn btn-outline-danger text-center">Eliminar de la lista</button>
+                                    </div>
+                                </div>`;
+    }
+    /*peliculas.forEach(function(pelicula, peli) {
+        
+    });*/
 }
 
 window.onload = function (){
