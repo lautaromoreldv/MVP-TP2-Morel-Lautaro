@@ -102,10 +102,10 @@ function refreshView(){
 
 function mostrarPeliculas(peliculas){
     peliculas.forEach(function(pelicula) {
-        /*mostrar.innerHTML = `<ul>
-                        <li>${pelicula.sinopsis}</li>
-                        <li>${pelicula.poster}</li>
-                    </ul>`;*/
+        vermastarde.innerHTML = `<ul>
+                                    <li>${pelicula.sinopsis}</li>
+                                    <li>${pelicula.poster}</li>
+                                </ul>`;
     });
 }
 
