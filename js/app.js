@@ -172,28 +172,3 @@ window.addEventListener("online", (e) => {
     });
 });
 
-let installButton = document.createElement('button');
-let prompt;
-
-window.addEventListener('beforeinstallprompt', function(e){
-  e.preventDefault();
-  prompt = e;
-});
-
-installButton.addEventListener('click', function(){
-   prompt.prompt();
-})
-
-let installed = false;
-installButton.addEventListener('click', async function(){
-  prompt.prompt();
-  let result = await that.prompt.userChoice;
-  if (result&&result.outcome === 'accepted') {
-     installed = true;
-  }
-})
-
-window.addEventListener('appinstalled', async function(e) {
-    installButton.style.display = "none";
- });
- 
