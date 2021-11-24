@@ -1,10 +1,20 @@
-.navbar{
+* {
+    box-sizing: border-box;
+    margin:0px;
+    padding:0px; 
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+#navbar{
     background-color: orange;
 }
-.on{
+.online{
     background-color: orange;
 }
 
-.off{
-    background-color: red;
+.offline{
+    background-color: grey !important;
 }
