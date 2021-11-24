@@ -13,17 +13,19 @@ let home = d.getElementById('home');
 let liHome = d.getElementById('liHome');
 let buscador = d.getElementById('buscador');
 
-liHome.addEventListener('click', () => {
+vermastarde.style.display = 'none';
+
+liHome.onclick = () => {
     vermastarde.style.display = 'none';
     home.style.display = 'block';
     buscador.style.display = 'block';
-})
+}
 
-liVermastarde.addEventListener('click', () => {
+liVermastarde.onclick = () =>{
     home.style.display = 'none';
     vermastarde.style.display = 'block';
     buscador.style.display = 'none';
-})
+}
 
 
 buscar.addEventListener('click', (e) => {
@@ -42,7 +44,7 @@ function obtenerDato(valor){
             const plot = data.Plot;
             const poster = data.Poster;
             const score = data.imdbRating;
-            info.innerHTML = `<div class="card">
+            info.innerHTML = `<div class="card mt-3 mb-3">
                                 <img class="card-img-top" src="${poster}" alt="${title}" />
                                 <div class="card-body">
                                     <h2 class="text-center">${title}</h2>
@@ -55,7 +57,7 @@ function obtenerDato(valor){
                                         <p>Calificación:</p>
                                         <span><strong>${score}/10</strong><span>
                                 </ul>  
-                                <div class="text-center pt-3 pb-3">
+                                <div class="text-center mt-3 mb-3">
                                     <button type="button" id="porver" class="btn btn-outline-info text-center">Ver más tarde</button>
                                 </div>
                             </div>`;
@@ -70,6 +72,7 @@ function obtenerDato(valor){
                                         score: score,
                                         _id: String(Date.now())
                                     })
+                                    window.scrollTo(0,0);
 
                                     alert.innerHTML = `<div class="alert alert-success" role="alert">
                                                         Se agregó con éxito a la sección Ver más tarde
@@ -104,27 +107,37 @@ function mostrarPeliculas(peliculas){
     for (let i = 0; i < peliculas.length; i++) {
         console.log(peliculas[i]);
         vermastarde.innerHTML = `<div class="card">
-                                    <img class="card-img-top" src="${peliculas.poster}" alt="${peliculas.titulo}" />
+                                    <img class="card-img-top" src="${peliculas[i].poster}" alt="${peliculas[i].titulo}" />
                                     <div class="card-body">
-                                        <h2 class="text-center">${peliculas.titulo}</h2>
+                                        <h2 class="text-center">${peliculas[i].titulo}</h2>
                                     </div>  
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item">
                                             <p>Descripción:</p>
-                                            <span>${peliculas.sinopsis}<span>
+                                            <span>${peliculas[i].sinopsis}<span>
                                         <li class="list-group-item">
                                             <p>Calificación:</p>
-                                            <span><strong>${peliculas.score}/10</strong><span>
+                                            <span><strong>${peliculas[i].score}/10</strong><span>
                                     </ul>  
                                     <div class="text-center pt-3 pb-3">
                                         <button type="button" id="porverdelete" class="btn btn-outline-danger text-center">Eliminar de la lista</button>
                                     </div>
                                 </div>`;
+                                let porverdelete = d.getElementById('porverdelete');
+                                porverdelete.addEventListener('click', (e) => {
+                                    e.preventDefault();
+                                    db.transaction(peliculas, 'readwrite')
+                                    .objectStore(peliculas)
+                                    .delete(1);
+                                    porverdelete.parentNode.remove();
+                                })
     }
     /*peliculas.forEach(function(pelicula, peli) {
         
     });*/
 }
+
+
 
 window.onload = function (){
     init();
