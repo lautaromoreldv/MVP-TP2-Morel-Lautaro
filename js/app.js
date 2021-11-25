@@ -54,23 +54,58 @@ function obtenerDato(valor){
             }, 1500);
 
             setTimeout(() => {
-                info.innerHTML = `<div class="card mt-3 mb-3 role="dialog">
-                                    <img class="card-img-top" src="${poster}" alt="${title}" />
-                                    <div class="card-body">
-                                        <h2 class="text-center">${title}</h2>
-                                    </div>  
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">
-                                            <p>Descripción:</p>
-                                            <span>${plot}<span>
-                                        <li class="list-group-item">
-                                            <p>Calificación:</p>
-                                            <span><strong>${score}/10</strong><span>
-                                    </ul>  
-                                    <div class="text-center mt-3 mb-3">
-                                        <button type="button" id="porver" class="btn btn-outline-info text-center">Ver más tarde</button>
+                info.innerHTML = `<div class="d-sm-none">
+                                    <div class="card mt-3 mb-3">
+                                        <img class="card-img-top" src="${poster}" alt="${title}" />
+                                            <div class="card-body">
+                                                <h2 class="text-center">${title}</h2>
+                                            </div>  
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <p>Descripción:</p>
+                                                <span>${plot}<span>
+                                            <li class="list-group-item">
+                                                <p>Calificación:</p>
+                                                <span><strong>${score}/10</strong><span>
+                                        </ul>  
+                                        <div class="text-center mt-3 mb-3">
+                                            <button type="button" id="porver" class="btn btn-outline-info text-center">Ver más tarde</button>
+                                        </div>
                                     </div>
-                                </div>`;
+                                </div>
+                
+
+                                <div class="row d-none d-sm-block">
+                                <div class="col-12">
+                                    <div class="card mt-3 mb-3">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                                                    <h2 class="text-center">${title}</h2>
+                                                        <div>
+                                                            <img class="card-img-top" src="${poster}" alt="${title}" />
+                                                        </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-7 col-lg-8 col-xl-9">
+                                                    <ul class="list-group list-group-flush">
+                                                        <li class="list-group-item">
+                                                            <p>Descripción:</p>
+                                                            <span>${plot}<span>
+                                                        </li>
+                                                        <li class="list-group-item">
+                                                            <p>Calificación:</p>
+                                                            <span><strong>${score}/10</strong><span>
+                                                        </li>    
+                                                    </ul> 
+                                                    <div class="text-center mt-3 mb-3">
+                                                        <button type="button" id="porver" class="btn btn-outline-info text-center">Ver más tarde</button>
+                                                    </div>   
+                                                </div>
+                                            </div>   
+                                        </div>  
+                                    </div>    
+                                </div>
+                            </div>`;
                 let porver = d.getElementById('porver');
                 porver.addEventListener('click', (e) => {
                     e.preventDefault();
@@ -115,6 +150,7 @@ function refreshView(){
     .then(mostrarPeliculas);
 }
 
+
 function mostrarPeliculas(peliculas){
     for (let i = 0; i < peliculas.length; i++) {
         vermastarde.innerHTML = `<div class="card">
@@ -153,7 +189,7 @@ window.onload = function (){
 
 window.addEventListener("offline", (e) => {
     console.log('offline');
-    alerta.innerHTML = `<div class="alert alert-dark" role="alert">
+    alerta.innerHTML = `<div class="alert alert-dark mt-3" role="alert">
                             ¡No hay conexión a internet!
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
@@ -175,7 +211,7 @@ window.addEventListener("online", () => {
   // Escucho si el navegador esta online o no, util en los casos que entro sin conexion.
   if (!navigator.onLine) {
     console.log("estoy sin conexion!!");
-    alerta.innerHTML = `<div class="alert alert-dark" role="alert">
+    alerta.innerHTML = `<div class="alert alert-dark mt-3 mb-3" role="alert">
                             Entraste a esta página pero no tenes internet :c
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
