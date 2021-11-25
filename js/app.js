@@ -5,13 +5,13 @@ const API_KEY = '5c825fa0';
 let buscar = d.getElementById('buscar');
 let input = d.getElementById('input');
 let info = d.getElementById('info');
-//let mostrar = d.getElementById('mostrar');
 let alerta = d.getElementById('alerta');
 let vermastarde = d.getElementById('vermastarde');
 let liVermastarde = d.getElementById('liVermastarde');
 let home = d.getElementById('home');
 let liHome = d.getElementById('liHome');
 let buscador = d.getElementById('buscador');
+let mostrar = d.getElementById('mostrar');
 
 vermastarde.style.display = 'none';
 
@@ -25,6 +25,7 @@ liVermastarde.onclick = () =>{
     home.style.display = 'none';
     vermastarde.style.display = 'block';
     buscador.style.display = 'none';
+    
 }
 
 
@@ -39,12 +40,11 @@ function obtenerDato(valor){
     fetch(url + API_KEY + '&t=' + valor)
         .then(response => response.json() )     
         .then(data => {
-            console.log(data);
             const title = data.Title;
             const plot = data.Plot;
             const poster = data.Poster;
             const score = data.imdbRating;
-            alerta.innerHTML = `<div class="d-flex justify-content-center">
+            alerta.innerHTML = `<div class="d-flex justify-content-center mt-3 mb-3">
                                     <div class="spinner-grow text-warning" role="status">
                                         <span class="sr-only">Loading...</span>
                                     </div>
@@ -69,24 +69,24 @@ function obtenerDato(valor){
                                                 <span><strong>${score}/10</strong><span>
                                         </ul>  
                                         <div class="text-center mt-3 mb-3">
-                                            <button type="button" id="porver" class="btn btn-outline-info text-center">Ver más tarde</button>
+                                            <button type="button" id="porver" class="btn btn-outline-info text-center porver">Ver más tarde</button>
                                         </div>
                                     </div>
                                 </div>
-                
+
 
                                 <div class="row d-none d-sm-block">
                                 <div class="col-12">
                                     <div class="card mt-3 mb-3">
                                         <div class="card-body">
                                             <div class="row">
-                                                <div class="col-sm-6 col-md-5 col-lg-4 col-xl-3">
+                                                <div class="col-sm-5 col-md-5 col-lg-4 col-xl-3">
                                                     <h2 class="text-center">${title}</h2>
                                                         <div>
                                                             <img class="card-img-top" src="${poster}" alt="${title}" />
                                                         </div>
                                                 </div>
-                                                <div class="col-sm-6 col-md-7 col-lg-8 col-xl-9">
+                                                <div class="col-sm-7 col-md-7 col-lg-8 col-xl-9">
                                                     <ul class="list-group list-group-flush">
                                                         <li class="list-group-item">
                                                             <p>Descripción:</p>
@@ -98,7 +98,7 @@ function obtenerDato(valor){
                                                         </li>    
                                                     </ul> 
                                                     <div class="text-center mt-3 mb-3">
-                                                        <button type="button" id="porver" class="btn btn-outline-info text-center">Ver más tarde</button>
+                                                        <button type="button" id="porver2" class="btn btn-outline-info text-center">Ver más tarde</button>
                                                     </div>   
                                                 </div>
                                             </div>   
@@ -106,40 +106,67 @@ function obtenerDato(valor){
                                     </div>    
                                 </div>
                             </div>`;
-                let porver = d.getElementById('porver');
-                porver.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    porver.parentNode.remove();
-                    db.peliculas.put({ 
-                        titulo: title, 
-                        poster: poster,
-                        sinopsis: plot, 
-                        score: score,
-                        _id: String(Date.now())
-                    })
-                    window.scrollTo(0,0);
 
-                    alerta.innerHTML = `<div class="alert alert-success" role="alert">
-                                        Se agregó con éxito a la sección Ver más tarde
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        </div>`;
-                    setTimeout(() => {
-                        alerta.innerHTML = '';
-                    }, 3000);
+                let porver = d.getElementById('porver');
+                let porver2 = d.getElementById('porver2');
+                
+                porver.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        porver.parentNode.remove();
+                        porver2.parentNode.remove();
+                        db.peliculas.put({ 
+                            titulo: title, 
+                            poster: poster,
+                            sinopsis: plot, 
+                            score: score,
+                            _id: String(Date.now())
+                        })
+                        .then(refreshView);
+                        window.scrollTo(0,0);
+                        alerta.innerHTML = `<div class="alert alert-success mt-3 mb-3" role="alert">
+                                            Se agregó con éxito a la sección Ver más tarde
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>`;
+                        setTimeout(() => {
+                            alerta.innerHTML = '';
+                        }, 3000);
+                        
+                    });
                     
-                });
+                    porver2.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        porver.parentNode.remove();
+                        porver2.parentNode.remove();
+                        db.peliculas.put({ 
+                            titulo: title, 
+                            poster: poster,
+                            sinopsis: plot, 
+                            score: score,
+                            _id: String(Date.now())
+                        })
+                        .then(refreshView);
+                        window.scrollTo(0,0);
+                        alerta.innerHTML = `<div class="alert alert-success mt-3 mb-3" role="alert">
+                                            Se agregó con éxito a la sección Ver más tarde
+                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            </div>`;
+                        setTimeout(() => {
+                            alerta.innerHTML = '';
+                        }, 3000);
+                        
+                    });
                 input.value = '';            
             }, 1500);
-                        
         })   
 }        
 
 
 function init(){
     db = new Dexie('DB-Peliculas');
-    
     db.version(1).stores({ peliculas: '_id'});
     db.open()
     .then(refreshView);
@@ -152,36 +179,41 @@ function refreshView(){
 
 
 function mostrarPeliculas(peliculas){
-    for (let i = 0; i < peliculas.length; i++) {
-        vermastarde.innerHTML = `<div class="card">
-                                    <img class="card-img-top" src="${peliculas[i].poster}" alt="${peliculas[i].titulo}" />
-                                    <div class="card-body">
-                                        <h2 class="text-center">${peliculas[i].titulo}</h2>
-                                    </div>  
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item">
-                                            <p>Descripción:</p>
-                                            <span>${peliculas[i].sinopsis}<span>
-                                        <li class="list-group-item">
-                                            <p>Calificación:</p>
-                                            <span><strong>${peliculas[i].score}/10</strong><span>
-                                    </ul>  
-                                    <div class="text-center pt-3 pb-3">
-                                        <button type="button" id="porverdelete" class="btn btn-outline-danger text-center">Eliminar de la lista</button>
-                                    </div>
-                                </div>`;
-                                let porverdelete = d.getElementById('porverdelete');
-                                porverdelete.addEventListener('click', (e) => {
-                                    e.preventDefault();
-                                    db.transaction(peliculas, 'readwrite')
-                                    .objectStore(peliculas)
-                                    .delete(1);
-                                    porverdelete.parentNode.remove();
-                                })
-    }
+    let html = '';
+    peliculas.forEach(function(pelis){
+        html += `<div class="col-12 col-sm-6 col-md-4 col-xl-3">
+                    <div class="card mt-3 mb-3">
+                        <img class="card-img-top" src="${pelis.poster}" alt="${pelis.titulo}" />
+                        <div class="card-body">
+                            <h2 class="text-center">${pelis.titulo}</h2>
+                        </div>  
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <p>Descripción:</p>
+                                <span>${pelis.sinopsis}<span>
+                            <li class="list-group-item">
+                                <p>Calificación:</p>
+                                <span><strong>${pelis.score}/10</strong><span>
+                        </ul>  
+                        <div class="text-center pt-3 pb-3">
+                            <button type="button" id="${pelis._id}" class="btn btn-outline-danger text-center porverdelete">Eliminar de la lista</button>
+                        </div>
+                    </div>
+                </div>`;
+    });
+    mostrar.innerHTML = html;
 }
 
-
+function sacar(e){
+    /*let id;
+    if(e.target.hasAttribute('id') && e.target.classList.contains('pordeverdelete')){
+        e.preventDefault();
+        id = e.target.getAttribute("id");
+        db.peliculas.where('_id').equals(id).delete()
+        .then(refreshView);
+    }*/
+    console.log('hola');
+}
 
 window.onload = function (){
     init();
@@ -231,7 +263,7 @@ window.addEventListener("online", () => {
     });
 });
 
-let installButton = document.createElement('button');
+/*let installButton = document.createElement('button');
 let prompt;
 
 window.addEventListener('beforeinstallprompt', function(e){
@@ -254,5 +286,5 @@ installButton.addEventListener('click', async function(){
 
 window.addEventListener('appinstalled', async function(e) {
     installButton.style.display = "none";
- });
+ });*/
  
