@@ -91,12 +91,12 @@ function obtenerDato(valor){
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-sm-5 col-md-5 col-lg-4 col-xl-3">
-                                                    <h2 class="text-center">${title}</h2>
-                                                        <div>
-                                                            <img class="card-img-top" src="${poster}" alt="${title}" />
-                                                        </div>
+                                                    <div>
+                                                        <img class="card-img-top" src="${poster}" alt="${title}" />
+                                                    </div>
                                                 </div>
                                                 <div class="col-sm-7 col-md-7 col-lg-8 col-xl-9">
+                                                    <h2 class="text-center">${title}</h2>
                                                     <ul class="list-group list-group-flush">
                                                         <li class="list-group-item">
                                                             <p>Descripción:</p>
@@ -186,38 +186,17 @@ function mostrarPeliculas(peliculas){
     let html = '';
     peliculas.forEach(function(pelis){
 
-        html += `<div class="d-sm-none divs">
+        html += `<div class="col-12 divs">
                     <div class="card mt-3 mb-3">
-                        <img class="card-img-top" src="${pelis.poster}" alt="${pelis.titulo}" />
-                            <div class="card-body">
-                                <h2 class="text-center">${pelis.titulo}</h2>
-                            </div>  
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <p>Descripción:</p>
-                                    <span>${pelis.sinopsis}<span>
-                                <li class="list-group-item">
-                                    <p>Calificación:</p>
-                                    <span><strong>${pelis.score}/10</strong><span>
-                            </ul>  
-                        <div class="text-center pt-3 pb-3">
-                            <button type="button" id="${pelis._id}" class="btn btn-outline-danger text-center porverdelete">Eliminar de la lista</button>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="d-none d-sm-block divs">
-                    <div class="col-12">
-                        <div class="card mt-3 mb-3">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-5 col-md-5 col-lg-4 col-xl-3">
-                                        <h2 class="text-center">${pelis.titulo}</h2>
-                                            <div>
-                                                <img class="card-img-top" src="${pelis.poster}" alt="${pelis.titulo}" />
-                                            </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-sm-5 col-md-5 col-lg-4 col-xl-3">
+                                    <div>
+                                        <img class="card-img-top" src="${pelis.poster}" alt="${pelis.titulo}" />
                                     </div>
-                                    <div class="col-sm-7 col-md-7 col-lg-8 col-xl-9">
+                                </div>
+                                <div class="col-sm-7 col-md-7 col-lg-8 col-xl-9">
+                                    <h2 class="text-center">${pelis.titulo}</h2>
                                         <ul class="list-group list-group-flush">
                                             <li class="list-group-item">
                                                 <p>Descripción:</p>
@@ -229,27 +208,25 @@ function mostrarPeliculas(peliculas){
                                         <div class="text-center pt-3 pb-3">
                                             <button type="button" id="${pelis._id}" class="btn btn-outline-danger text-center porverdelete">Eliminar de la lista</button>
                                         </div> 
-                                    </div>
-                                </div>   
-                            </div>  
-                        </div>    
-                    </div>
+                                </div>
+                            </div>   
+                        </div>  
+                    </div>    
                 </div>`;
     });
     mostrar.innerHTML = html;
 
-        let pelis = d.getElementsByClassName('divs');
-        //se muestran todas las elegidas en ver mas tarde
-
-        //error en elegir una al azar
-        let aleatorio = Math.floor(Math.random() * pelis.length);
-        let elegida = pelis[aleatorio];
-        random.appendChild(elegida);
-        
-       let botones = d.getElementsByClassName('porverdelete');
+    let botones = d.getElementsByClassName('porverdelete');
         for (let i = 0; i < botones.length; i++) {
             botones[i].addEventListener('click', borrar);
         }
+
+        /*let pelis = d.querySelectorAll('.divs');
+        console.log(pelis);
+        let aleatorio = Math.floor(Math.random() * pelis.length);
+        let elegida = pelis[aleatorio];
+        random.appendChild(elegida);*/ 
+       
 }
 
 function borrar(e){
