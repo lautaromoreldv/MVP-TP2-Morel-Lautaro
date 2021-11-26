@@ -10,24 +10,34 @@ let vermastarde = d.getElementById('vermastarde');
 let liVermastarde = d.getElementById('liVermastarde');
 let home = d.getElementById('home');
 let liHome = d.getElementById('liHome');
+let random = d.getElementById('random');
+let liRandom = d.getElementById('liRandom');
 let buscador = d.getElementById('buscador');
 let mostrar = d.getElementById('mostrar');
 
 vermastarde.style.display = 'none';
+random.style.display = 'none';
 
 liHome.onclick = () => {
     vermastarde.style.display = 'none';
     home.style.display = 'block';
     buscador.style.display = 'block';
+    random.style.display = 'none';
 }
 
-liVermastarde.onclick = () =>{
+liVermastarde.onclick = () => { 
     home.style.display = 'none';
     vermastarde.style.display = 'block';
     buscador.style.display = 'none';
-    
+    random.style.display = 'none';
 }
 
+liRandom.onclick = () => {
+    home.style.display = 'none';
+    vermastarde.style.display = 'none';
+    buscador.style.display = 'none';
+    random.style.display = 'block';
+}
 
 buscar.addEventListener('click', (e) => {
     e.preventDefault();
@@ -181,7 +191,7 @@ function refreshView(){
 function mostrarPeliculas(peliculas){
     let html = '';
     peliculas.forEach(function(pelis){
-        html += `<div class="col-12 col-sm-6 col-md-4 col-xl-3">
+        html += `<div class="col-12 col-sm-6 col-md-4 col-xl-3 divs">
                     <div class="card mt-3 mb-3">
                         <img class="card-img-top" src="${pelis.poster}" alt="${pelis.titulo}" />
                         <div class="card-body">
@@ -202,18 +212,31 @@ function mostrarPeliculas(peliculas){
                 </div>`;
     });
     mostrar.innerHTML = html;
+
+        let pelis = d.getElementsByClassName('divs');
+        //hay un error x aca, no se muestra las pelis elegidas en ver mas tarde
+       if(pelis.length > 0){
+            let aleatorio = Math.floor(Math.random() * pelis.length);
+            let elegida = pelis[aleatorio];
+            random.appendChild(elegida);
+       }
+
+       let botones = d.getElementsByClassName('porverdelete');
+        for (let i = 0; i < botones.length; i++) {
+            //botones[i].addEventListener('click', borrar);
+        }
 }
 
-function sacar(e){
-    /*let id;
-    if(e.target.hasAttribute('id') && e.target.classList.contains('pordeverdelete')){
+/*function borrar(e){
+    let id;
+    if(e.target.hasAttribute('id')){
         e.preventDefault();
         id = e.target.getAttribute("id");
         db.peliculas.where('_id').equals(id).delete()
         .then(refreshView);
-    }*/
-    console.log('hola');
-}
+    }
+}*/
+
 
 window.onload = function (){
     init();
@@ -262,29 +285,3 @@ window.addEventListener("online", () => {
         navMain.collapse('hide');
     });
 });
-
-/*let installButton = document.createElement('button');
-let prompt;
-
-window.addEventListener('beforeinstallprompt', function(e){
-  e.preventDefault();
-  prompt = e;
-});
-
-installButton.addEventListener('click', function(){
-   prompt.prompt();
-})
-
-let installed = false;
-installButton.addEventListener('click', async function(){
-  prompt.prompt();
-  let result = await that.prompt.userChoice;
-  if (result&&result.outcome === 'accepted') {
-     installed = true;
-  }
-})
-
-window.addEventListener('appinstalled', async function(e) {
-    installButton.style.display = "none";
- });*/
- 
