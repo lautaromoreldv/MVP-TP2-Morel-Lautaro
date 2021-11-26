@@ -2,6 +2,8 @@ let d = document;
 let db;
 const url = 'https://www.omdbapi.com/?apikey=';
 const API_KEY = '5c825fa0';
+//const yt = 'https://www.googleapis.com/youtube/v3/search?part=snippet&';
+//const API_KEY_YT = 'AIzaSyDjiLbyZpoyoUwICJOpUh6nBtOq3lwMYtw';
 let buscar = d.getElementById('buscar');
 let input = d.getElementById('input');
 let info = d.getElementById('info');
@@ -14,6 +16,31 @@ let random = d.getElementById('random');
 let liRandom = d.getElementById('liRandom');
 let buscador = d.getElementById('buscador');
 let mostrar = d.getElementById('mostrar');
+let ver = d.getElementById('ver');
+
+let Trailers = [
+	{   
+        nombre: 'Eternals',
+        src: 'https://www.youtube.com/embed/v1EkoQV4g5c'
+	},
+    {
+        nombre: 'Halloween Kills',
+        src: 'https://www.youtube.com/embed/I-iJbMA3aoA'
+    },
+    {   
+        nombre: 'Shang-Chi y la Leyenda de los Diez Anillos ',
+        src: 'https://www.youtube.com/embed/BD77EOU8N3o'
+	},
+    {   
+        nombre: 'Spider-Man sin camino a casa',
+        src: 'https://www.youtube.com/embed/r6t0czGbuGI'
+	},
+    {
+        nombre: 'Venom 2: Carnage Liberado',
+        src: 'https://www.youtube.com/embed/-AnsJLpsxms'
+    }
+];
+	
 
 vermastarde.style.display = 'none';
 random.style.display = 'none';
@@ -37,6 +64,20 @@ liRandom.onclick = () => {
     vermastarde.style.display = 'none';
     buscador.style.display = 'none';
     random.style.display = 'block';
+    trailer();
+}
+
+function trailer(){
+    let html = '';
+    Trailers.forEach(function(pelis){
+        html += `<div class="pt-3 pb-3">
+                    <h3 class="text-center">${pelis.nombre}</h3>
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="${pelis.src}" allowfullscreen></iframe>
+                        </div>
+                </div>`;
+    });
+    ver.innerHTML = html;
 }
 
 buscar.addEventListener('click', (e) => {
@@ -45,6 +86,7 @@ buscar.addEventListener('click', (e) => {
         obtenerDato(input.value);   
     }
 })
+
 
 function obtenerDato(valor){
     fetch(url + API_KEY + '&t=' + valor)
@@ -215,19 +257,13 @@ function mostrarPeliculas(peliculas){
                 </div>`;
     });
     mostrar.innerHTML = html;
-
+    
     let botones = d.getElementsByClassName('porverdelete');
-        for (let i = 0; i < botones.length; i++) {
-            botones[i].addEventListener('click', borrar);
-        }
-
-        /*let pelis = d.querySelectorAll('.divs');
-        console.log(pelis);
-        let aleatorio = Math.floor(Math.random() * pelis.length);
-        let elegida = pelis[aleatorio];
-        random.appendChild(elegida);*/ 
-       
+    for (let i = 0; i < botones.length; i++) {
+        botones[i].addEventListener('click', borrar);
+    }
 }
+
 
 function borrar(e){
     let id;
