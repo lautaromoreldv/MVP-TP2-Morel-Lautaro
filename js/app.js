@@ -119,6 +119,12 @@ function obtenerDato(valor){
 
                 let porver = d.getElementById('porver');
                 let porver2 = d.getElementById('porver2');
+                let msj = `<div class="alert alert-success mt-3 mb-3" role="alert">
+                                        Se agregó con éxito a la sección Ver más tarde
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>`;
                 
                 porver.addEventListener('click', (e) => {
                         e.preventDefault();
@@ -133,12 +139,7 @@ function obtenerDato(valor){
                         })
                         .then(refreshView);
                         window.scrollTo(0,0);
-                        alerta.innerHTML = `<div class="alert alert-success mt-3 mb-3" role="alert">
-                                            Se agregó con éxito a la sección Ver más tarde
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            </div>`;
+                        alerta.innerHTML = msj;
                         setTimeout(() => {
                             alerta.innerHTML = '';
                         }, 3000);
@@ -158,12 +159,7 @@ function obtenerDato(valor){
                         })
                         .then(refreshView);
                         window.scrollTo(0,0);
-                        alerta.innerHTML = `<div class="alert alert-success mt-3 mb-3" role="alert">
-                                            Se agregó con éxito a la sección Ver más tarde
-                                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                            </div>`;
+                        alerta.innerHTML = msj;
                         setTimeout(() => {
                             alerta.innerHTML = '';
                         }, 3000);
@@ -173,7 +169,6 @@ function obtenerDato(valor){
             }, 1500);
         })   
 }        
-
 
 function init(){
     db = new Dexie('DB-Peliculas');
@@ -187,47 +182,77 @@ function refreshView(){
     .then(mostrarPeliculas);
 }
 
-
 function mostrarPeliculas(peliculas){
     let html = '';
     peliculas.forEach(function(pelis){
-        html += `<div class="col-12 col-sm-6 col-md-4 col-xl-3 divs">
+
+        html += `<div class="d-sm-none divs">
                     <div class="card mt-3 mb-3">
                         <img class="card-img-top" src="${pelis.poster}" alt="${pelis.titulo}" />
-                        <div class="card-body">
-                            <h2 class="text-center">${pelis.titulo}</h2>
-                        </div>  
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <p>Descripción:</p>
-                                <span>${pelis.sinopsis}<span>
-                            <li class="list-group-item">
-                                <p>Calificación:</p>
-                                <span><strong>${pelis.score}/10</strong><span>
-                        </ul>  
+                            <div class="card-body">
+                                <h2 class="text-center">${pelis.titulo}</h2>
+                            </div>  
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <p>Descripción:</p>
+                                    <span>${pelis.sinopsis}<span>
+                                <li class="list-group-item">
+                                    <p>Calificación:</p>
+                                    <span><strong>${pelis.score}/10</strong><span>
+                            </ul>  
                         <div class="text-center pt-3 pb-3">
                             <button type="button" id="${pelis._id}" class="btn btn-outline-danger text-center porverdelete">Eliminar de la lista</button>
                         </div>
+                    </div>
+                </div>
+
+                <div class="d-none d-sm-block divs">
+                    <div class="col-12">
+                        <div class="card mt-3 mb-3">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-5 col-md-5 col-lg-4 col-xl-3">
+                                        <h2 class="text-center">${pelis.titulo}</h2>
+                                            <div>
+                                                <img class="card-img-top" src="${pelis.poster}" alt="${pelis.titulo}" />
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-7 col-md-7 col-lg-8 col-xl-9">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <p>Descripción:</p>
+                                                <span>${pelis.sinopsis}<span>
+                                            <li class="list-group-item">
+                                                <p>Calificación:</p>
+                                                <span><strong>${pelis.score}/10</strong><span>
+                                        </ul>  
+                                        <div class="text-center pt-3 pb-3">
+                                            <button type="button" id="${pelis._id}" class="btn btn-outline-danger text-center porverdelete">Eliminar de la lista</button>
+                                        </div> 
+                                    </div>
+                                </div>   
+                            </div>  
+                        </div>    
                     </div>
                 </div>`;
     });
     mostrar.innerHTML = html;
 
         let pelis = d.getElementsByClassName('divs');
-        //hay un error x aca, no se muestra las pelis elegidas en ver mas tarde
-       if(pelis.length > 0){
-            let aleatorio = Math.floor(Math.random() * pelis.length);
-            let elegida = pelis[aleatorio];
-            random.appendChild(elegida);
-       }
+        //se muestran todas las elegidas en ver mas tarde
 
+        //error en elegir una al azar
+        let aleatorio = Math.floor(Math.random() * pelis.length);
+        let elegida = pelis[aleatorio];
+        random.appendChild(elegida);
+        
        let botones = d.getElementsByClassName('porverdelete');
         for (let i = 0; i < botones.length; i++) {
-            //botones[i].addEventListener('click', borrar);
+            botones[i].addEventListener('click', borrar);
         }
 }
 
-/*function borrar(e){
+function borrar(e){
     let id;
     if(e.target.hasAttribute('id')){
         e.preventDefault();
@@ -235,7 +260,7 @@ function mostrarPeliculas(peliculas){
         db.peliculas.where('_id').equals(id).delete()
         .then(refreshView);
     }
-}*/
+}
 
 
 window.onload = function (){
